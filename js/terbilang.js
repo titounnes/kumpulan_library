@@ -28,7 +28,7 @@ var digit3 = function(feed) {
 
       //menentukan nilai puluhan
       if (digit[1] == '1') {
-        output += (digit[2] == '0') ? 'sepuluh ' : (digit[2] == '1' ? ' se' : angka[digit[2]]) + 'belas ';
+        output += (digit[2] == '0') ? ' sepuluh ' : (digit[2] == '1' ? ' se' : angka[digit[2]]) + 'belas ';
       } else if (digit[1] != '0') {
         output += angka[digit[1]] + ' puluh ' + angka[digit[2]] + ' ';
       } else {
