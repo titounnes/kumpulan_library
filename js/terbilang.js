@@ -6,7 +6,8 @@ var digit3 = function(feed) {
   var angka = ["", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan"];
   //membuat function untuk memecah bilangan menjadi array beranggota 3 digit
 
-
+	number = feed.toString().split('.');
+	feed = number[0];
   //menginisiasi luaran
   var output = '';
 
@@ -48,9 +49,26 @@ var digit3 = function(feed) {
       output += units[segment3.length - i - 1] + ' ';
     }
   })
-  return output;
+	var decimal = '';
+	if(typeof number[1] != 'undefined'){
+		decimal = ' koma ';
+		angka[0] = ' nol';
+		$.each(number[1].split(''), function(i, v){
+			decimal += ' ' + angka[v];
+		})
+	}
+  return output + decimal ;
 }
 
+var currency = function(feed, number, decimal){
+	var segment = feed.split('.');
+	var number = segment[0].toString().split('').reverse().join('');
+
+	while (/(\d+)(\d{3})/.test(number)) {
+    number = number.replace(/(\d+)(\d{3})/, '$1' + '.' + '$2');
+  }
+	return number.split('').reverse().join('') + (typeof segment[1] != 'undefined' ? ','+segment[1] : '');
+}
 
 $(document).on('click', '#converter', function() {
   var feed = $('#number').val();
@@ -58,6 +76,6 @@ $(document).on('click', '#converter', function() {
     alert('Yang anda tulis bukan bilangan')
     return false;
   }
-
-  var digits = $('#output').html(digit3(feed))
+	$('#currency').html(currency(feed))
+  $('#output').html(digit3(feed))
 })
