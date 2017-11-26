@@ -1,7 +1,7 @@
 var digit3 = function(feed) {
 
   //mendefinisikan satuan 
-  var units = ['', 'ribu ', 'juta', 'milyar', 'triliun', 'Kuadriliun','Kuantiliun','Sekstiliun','Septiliun','Oktiliun','Noniliun','Desiliun'];
+  var units = ['', 'ribu ', 'juta', 'milyar', 'triliun', 'kuadriliun','kuantiliun','sekstiliun','septiliun','oktiliun','noniliun','desiliun'];
   //Mendefinisikan bilangan
   var angka = ["", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan"];
   //membuat function untuk memecah bilangan menjadi array beranggota 3 digit
