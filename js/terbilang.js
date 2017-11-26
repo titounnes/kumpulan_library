@@ -1,4 +1,4 @@
-var digit3 = function(data) {
+var digit3 = function(feed) {
 
   //mendefinisikan satuan 
   var units = ['', 'ribu ', 'juta', 'milyar', 'triliun', 'Kuadriliun','Kuantiliun','Sekstiliun','Septiliun','Oktiliun','Noniliun','Desiliun'];
@@ -6,27 +6,19 @@ var digit3 = function(data) {
   var angka = ["", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan"];
   //membuat function untuk memecah bilangan menjadi array beranggota 3 digit
 
-	var number = data.toString().split('.');
-	feed = number[0];
+	var number = currency(feed).split(',');
+
   //menginisiasi luaran
   var output = '';
 
-  if (feed.length % 3 > 0) {
-    feed = '00'.substr(0, (3 - feed.length % 3)) + feed;
-    //1234 akan diubah menjadi 001234
-  }
-
-  //menyisipkan titik sebagai separator
-  //001234 akan diubah menjadi 001.123
-  while (/(\d+)(\d{3})/.test(feed)) {
-    feed = feed.replace(/(\d+)(\d{3})/, '$1' + '.' + '$2');
-  }
-
-  var segment3 = feed.split('.');
+  var segment3 = number[0].split('.');
   //Membilang setiap segmen 3 digit
   $.each(segment3, function(i, v) {
     if (v * 1 != 0) {
       //memecah 3 digit menjadi arrau 1 digit
+      if(v.length < 3){
+        v = ('00'+v).substr(-3,3);
+      }
       var digit = v.split('');
 
       //menentukan nilai ratusan
@@ -49,7 +41,8 @@ var digit3 = function(data) {
       output += units[segment3.length - i - 1] + ' ';
     }
   })
-	var decimal = '';
+
+  var decimal = '';
 	if(typeof number[1] != 'undefined'){
 		decimal = ' koma ';
 		angka[0] = ' nol';
@@ -57,17 +50,23 @@ var digit3 = function(data) {
 			decimal += ' ' + angka[v];
 		})
 	}
+
   return output + decimal ;
 }
 
-var currency = function(feed, number, decimal){
-	var segment = feed.split('.');
-	var number = segment[0].toString().split('').reverse().join('');
+var currency = function(feed, number){
 
-	while (/(\d+)(\d{3})/.test(number)) {
-    number = number.replace(/(\d+)(\d{3})/, '$1' + '.' + '$2');
+  if(typeof number != 'undefined' && ! isNaN(number)){
+    feed  = Math.round(feed*10^(-number))*10^number;
   }
-	return number.split('').reverse().join('') + (typeof segment[1] != 'undefined' ? ','+segment[1] : '');
+
+  var segment = feed.split('.');
+
+	while (/(\d+)(\d{3})/.test(segment[0])) {
+    segment[0] = segment[0].replace(/(\d+)(\d{3})/, '$1' + '.' + '$2');
+  }
+
+  return segment[0] + (typeof segment[1] != 'undefined' ? ','+segment[1] : '');
 }
 
 $(document).on('click', '#converter', function() {
