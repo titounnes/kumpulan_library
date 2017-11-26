@@ -33,7 +33,7 @@ var digit3 = function(feed) {
         output += angka[digit[1]] + ' puluh ' + angka[digit[2]] + ' ';
       } else {
         if (digit[0] == '0' && digit[1] == '0' && digit[2] == '1') {
-          output += (i == segment3.length - 1) ? 'se' : 'satu ';
+          output += (i == segment3.length - 2) ? 'se' : 'satu ';
         } else {
           output += angka[digit[2]] + ' ';
         }
